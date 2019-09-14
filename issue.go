@@ -821,6 +821,22 @@ func (s *IssueService) UpdateComment(issueID string, comment *Comment) (*Comment
 	return responseComment, resp, nil
 }
 
+func (s *IssueService) GetComment(issueID string, commentId string) (*Comment, *Response, error) {
+	apiEndpoint := fmt.Sprintf("rest/api/2/issue/%s/comment/%s?expand=renderedBody", issueID, commentId)
+	req, err := s.client.NewRequest("GET", apiEndpoint, nil)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	responseComment := new(Comment)
+	resp, err := s.client.Do(req, responseComment)
+	if err != nil {
+		return nil, resp, err
+	}
+
+	return responseComment, resp, nil
+}
+
 // DeleteComment Deletes a comment from an issueID.
 //
 // JIRA API docs: https://developer.atlassian.com/cloud/jira/platform/rest/v3/#api-api-3-issue-issueIdOrKey-comment-id-delete
