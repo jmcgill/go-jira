@@ -1219,9 +1219,9 @@ func (s *IssueService) AddWatcher(issueID string, userName string) (*Response, e
 //
 // JIRA API docs: https://docs.atlassian.com/software/jira/docs/api/REST/latest/#api/2/issue-removeWatcher
 func (s *IssueService) RemoveWatcher(issueID string, userName string) (*Response, error) {
-	apiEndPoint := fmt.Sprintf("rest/api/2/issue/%s/watchers", issueID)
+	apiEndPoint := fmt.Sprintf("rest/api/2/issue/%s/watchers?username=%v", issueID, userName)
 
-	req, err := s.client.NewRequest("DELETE", apiEndPoint, userName)
+	req, err := s.client.NewRequest("DELETE", apiEndPoint, nil)
 	if err != nil {
 		return nil, err
 	}
